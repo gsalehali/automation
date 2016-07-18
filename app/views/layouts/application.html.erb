@@ -9,6 +9,12 @@
   </head>
 
   <body>
+    <nav>
+      <%= link_to "Home", home_index_path %> |
+      <%= link_to "FAQ", home_faq_path %> |
+      <%= link_to "About us", home_aboutus_path %> |
+      <%= link_to "Conatact us", home_contactus_path %>
+    </nav>
     <%= yield %>
   </body>
 </html>

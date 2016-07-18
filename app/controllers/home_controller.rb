@@ -2,12 +2,12 @@ class HomeController < ApplicationController
   def index
   end
 
-  def about
+  def aboutus
   end
 
-  def FAQ
+  def faq
   end
 
-  def contact
+  def contactus
   end
 end
