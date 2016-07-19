@@ -1,7 +1,81 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
+
+genre = {
+  "Action"=> "The action genre in anime depicts extremely high levels of high-intensity action. More often than not, you’ll be witnessing thrilling battles and action-packed fight scenes in the shows included in this genre. Whether it makes you jump off your seat or knock your own socks off your feet, the feeling is close to those and it’s the rush and excitement of action that would make you want to do those. Overall, the action genre usually possesses lots of battle scenes, fluid animation, and highly-engaging elements that will generally make your adrenaline go rush!",
+  "Adventur"=> "Adventure as it stands by itself is about travelling and undertaking an adventure in a certain place or around the world (which may sometimes escalate to the whole universe or even to the other dimensions). In this genre, the main characters don’t usually stay in one place, but instead, ventures into several different places usually with a goal in mind (e.g. searching for treasure, exploring some new place, defeating a heinous villain, saving the world, etc.). Adventure anime are so broad and flexible that these shows usually can stretch to a huge number of episodes as well as mix-and-match with every other genre.",
+  "Comedy"=> "The main purpose of the comedy genre is…you got it…to make you laugh! If it fails to make you laugh or at least make you giggle, then it’s a failure. But then again, humor can depend on each and everyone’s perspective. Funny moments, hilarious scenes, wacky dialogues, comical happenings – all of these are covered by the comedy genre in anime!" ,
+  "Demons"=> "Originally just a theme, the demons genre rose to its ranks because of the rising fame of demon characters and other demon-like elements. As the term demon not only just encompasses literal demon characters, it also extends to other entities such as monsters, beasts, ghosts, and other demon-kind. Believe it or not, this category doesn’t just come hand-in-hand with the horror genre; it surprisingly blends well with the other genres as well (as proven by the huge and ever-increasing number of anime in the demons genre).",
+  "Drama"=> "Tear-inducing and emotion-stimulating – these are basically what the drama genre does best! Drama anime shows tends to connect the viewers to the experiences of the characters. This results to the viewers feeling just as how the characters they are watching feels. May it be a tickle of emotion or a barrage of feelings, the dramatic scenes’ goal is to connect and touch our emotional spirit. In anime, one of the greatest sign that the drama effectively worked – is if it was able to make you cry/tear.",
+  "Ecchi"=> "The word ecchi comes from the sound of “H” in the word hentai, which in turn means “pervert” in Japanese. Having that said, this genre is generally accepted as a category full of slight sexual scenes (mild enough to be viewed by the general audience) and scenarios derived from sexual innuendoes. It’s a fact that ecchi anime shows are taking an upswing nowadays as more and more titles are produced every season as if it’s becoming the trend. More often than not, ecchi is paired up with comedy as both compliments each other well, which in turn serves as a buffer that prevents the shows from crossing the line and delving into much deeper inappropriateness.",
+  "Fantasy"=> "The fantasy genre in anime primarily deals with fantasy worlds and surreal events and places. Most of the time, the setting is in a magical fantasy world where the characters starts an adventure or sometimes get sent to from the real world. Magic is oftentimes a component of this genre, and various mystical elements serve as the building blocks of the story. You’ll often know it’s a fantasy anime show you’re watching if the environment and atmosphere seems so dazzling and dreamlike that it’ll make you feel captivated and allured.",
+  "Game"=> "The game category encompasses shows revolving around the idea of gaming and playing. May it be a card game, a board game, a puzzle game, or even a virtual online game - as long as it concerns any playable game of any kind, it belongs to this category. Sometimes, even video-game-based shows can count in this selection.",
+  "Harem"=> "If you see a male character surrounded by multiple female characters gearing towards an awkward love situation, then you’re probably watching an anime of the harem genre. Usually, it’s more than two female characters head-over-heels over a single male character and they’re all typically inside a comedic and oftentimes even romantic situation. But it can also happen that the harem isn’t affiliated with any sort of romance but instead just for the comic relief.",
+  "Historical"=> "As the name suggests, historical anime revolves around events in history, historical settings, and moments of antiquity. Typical of this genre are shows set in ancient japan and the feudal period. Other settings such as the middle ages and medieval ages also exist but they’re much rarer in anime. Sometimes, as long as the time or setting (or even elements) are old and ancient, then it’s considered a historical anime.",
+  "Horror"=> "It’s not much difficult to spot the horror genre in anime. Usually, if there are ghosts, monsters, gore, and creeps, then it’s a horror anime you’re watching. As a general trend, as long as there’s heavy gore and bloody violence in a show, then it’s most probably in the horror category. But, the most important factor for a show to be considered horror is its ability to scare and creep you out.",
+  "Josei"=> "Josei is actually a demographic but is also considered as a general genre in anime. It’s a genre that specifically targets female viewers around the age range of 18-40. With that age range, the shows here are depicted in a more mature light usually with very realistic romance and less-dreamy, less-idealized portrayals.",
+  "Kids"=> "A lot of people say that anime is just for kids, but that’s not really true. As a matter of fact, there are only a few number of anime that are precisely catered towards children. These shows are contained within the kids genre in anime. And as it sounds like, these shows are mild, light, and insightful (which is perfect for children 12-years-old and below).",
+  "Magic"=> "Magic in all its essence is about magical stuff like spells and incantations. It can also include magical sources, beings that grants wishes, and good ol’ sleeve tricks. One of the most famous theme in the magic genre is the “magical girls” theme which is becoming so popular that it might just become a whole new genre on its own in the future. In essence, the magic genre is all about magic and all the forces that deals with it.",
+  "Martial Arts"=> "Martial arts plays a big role in every anime that has fighting/battles in it. From hand-to-hand combat, to swordplay, to gun shooting, and armed combat – there’s some kind of martial arts element that plays through them. But, did you know that there are shows that are basically focused on martial arts itself and the battle techniques? There’s a lot of them, and they mainly involve hand-to-hand combat and technician battles.",
+  "Mecha"=> "Mecha stands for mechanical (in this case, mechanical units or robots). You’ll never see a mecha anime without a robot or mechanical suit/object in it. That’s the most important element of it. And while this genre is rising in fame as the days go by, it almost always uses a standard formula to carry the plot. As a general trend, mecha is often seen alongside the military, sci-fi, and action genre.",
+  "Military"=> "As the name implies, the military genre involves the military in one way or another. War may also be a huge part of the military genre as this is the case where the military is often utilized. One thing to note is that the military genre is often coupled with the mecha and action genre",
+  "Music"=> "Anime shows in the music genre aren’t that popular nowadays, but they do exists and they are very timely. Shows of the music genre are pretty much very musical throughout the airing. Whether it’s singing, dancing, or playing musical instruments – anime shows of the music genre goes all out when it comes to these things",
+  "Mystery"=> "If there’s one thing that’s similar in all mystery anime shows, that is the existence of a central mystery. Whether it’s an event, a place, of an item – if there’s some sort of mystery surrounding it, then it can readily be classified in the ranks of mystery anime. In anime history, the most popular shows in the mystery genre are the ones with detectives and gumshoes in them. But generally, if there’s something strange or even a mundane thing that requires getting deeper to get to the root of it, then there’s mystery in it.",
+  "Parody"=> "A parody anime is one which countless numbers of other anime references are showcased throughout the plot. May it be a popular running gag, a famous symbol, a character reference, or any other attempts in bringing another show into its domain – it’s considered as parody. One anime worthy to note is Gintama where they often use similar elements (copycat) from other anime to showcase in their own show.",
+  "Police"=> "The police genre emphasizes the life and struggles of police characters in their line of duty. Originally just a character reference, police-based characters have shown up in numerous shows that in turn made them befitting of their own genre. Police doesn’t just count police characters – it also counts detectives, investigators, and enforcers in its array.",
+  "Psychological"=> "Based on its literal meaning, psychological anime are shows that delves into how the mind, psyche, and thinking works. This genre tackles everything in a very psychological level (sometimes even philosophical). You’ll often find mind games here as well as battles where the use of the wits is the primary focus. Shows that plays with your mind or make you think hard are also part of this genre",
+  "Romance"=> "Romance is all about love and sweet moments. Shows involved with this genre often have the skill to tug everyone’s heartstrings with the laid-out romantic scenes and sweet moments. The focus in this one is the romantic relationships of the characters as well as the blooming of their love with one another. You’ll often find romance anime tightly tied with the shoujo genre, but it also works pretty well with comedy, harem, and drama.",
+  "Samurai"=> "Often (if not always) used with the historical genre with the time frame being centered around the Edo Period in Japan, often has alot of action although the element of drama is also seen due to the time setting. Can be comical i.e Gintama, and Samurai Champloo or follow a more serious mood such as Blade of the Immortal or Rurouni Kenshin.",
+  "School"=> "While school is originally just a setting, there are countless of anime that uses it as such, warranting it to become a successful genre. School anime are shows that are set in a school setting. It’s the school which is the most important factor for this genre. So, if the school is the primary setting of the story (or even secondary), then it’s a school anime.",
+  "Sci-Fi"=> "Sci-Fi (short for science fiction) is a genre that showcases scientific and technological elements in its story. Machines and various kinds of technologies are staples of this genre. Most of the time, its focus is on the advancement and development of science and technology. That is why you’ll often find sci-fi combined with its complimentary genres – mecha and space.",
+  "Seinen"=> "Relatively uncommon in the west due to the emphasis on the male teen market, \"seinen\" is a demographic indicator for anime and manga aimed at a young adult male (college-aged) audience. As such, this kind of anime tends to be more sophisticated than shōnen anime. There are many of the same basic themes/subgenres as shōnen but they are more psychological, satirical, violent, sexual, etc. In other words they are intended for a more mature audience.",
+  "Shoujo"=> "Shoujo is actually a demographic but is also considered as a general genre in anime. It’s a genre that specifically targets female viewers around the age range of 10-18. With that age range, the shows here are mostly idealized and well-rounded. Most of the time, the shoujo genre works line-in-line with the romance and the comedy genre (emphasis on the romance part).",
+  "Shounen"=> "Shounen is actually a demographic but is also considered as a general genre in anime. It’s a genre that specifically targets male viewers around the age range of 10-18. With that age range, the shows here are mostly idealized and well-rounded. Most of the time, shounen anime shows are considered general and almost always even becomes the most trending mainstream shows." ,
+  "Slice of Life"=> "When one says slice of life, that means – mundane good ol’ life. Stories depicted in this genre are realistically set in the domain of real life. Nothing out-of-the-blue happens, but that’s its point! It’s role is to portray everyday life in a realistic light as much as possible, with nothing out of the extraordinary wrecking the premise.",
+  "Space"=> "Yes, it’s a setting but, as many shows are becoming more and more comfortable in using it as a setting, it has already become a genre in itself. As it stands, anything that uses space as a setting is a space anime. In general, anime of this category are often paired-up with the mecha and sci-fi genre.",
+  "Sports"=> "Pretty much self-explanatory, sports anime are shows that bases on the very definition of sports. That means, it can tackle on the story of the many sports you know of. Popular choices in this domain includes basketball, tennis, baseball, and soccer. Other sports exists as well (including those that you wouldn’t expect showing up in anime). And as time goes on, more and more are produced. Just like sports, shows lined-up in this genre are also fundamentally action-packed!",
+  "Super Power"=> "You’d know you’re watching a super power anime if you’re seeing an array of explosive super powers scrambling right on the screen. Super Power anime aren’t just super – they’re overwhelming! If you see bursts of energy balls, death-defying attacks, and opposing super forces battling it out throughout the story, then that means you’re probably witnessing an anime of the super power genre.",
+  "Supernatural"=> "When one says supernatural, then one thing or another, they’re referring to stuff or events that are odd and out-of-the-blue. For this category, supernatural might take the meaning of mythical, mystical, bizarre, or something outside the bounds of accepted reality. There’s a shadow of mystery often found in shows involved with this genre which then effectively puts the word “super” in supernatural.",
+  "Vampire"=> "As vampires have become so popular throughout the world, it’s to no shock that they’ve also infested the world of anime. There are lots of titles now featuring vampires and the themes surrounding them. And while they’re not just exclusive to the horror category, they’ve also manifested themselves into several other categories such as comedy, romance, and drama. So once you see a vampire in a show you’re watching, you can count that in in the vampire genre.",
+}
+
+seeded = 0
+genre.each do |key, value|
+  Genre.create!(
+    genre: key,
+    description: value
+  )
+    seeded = seeded + 1
+    puts seeded
+end
+
+rates = {
+  "G" => ["(All Ages)", "General, suitable for all ages"],
+  "PG" => ["(Children)", "Parental guidance Advised"],
+  "PG-13" => ["(Teens 13 or older)", "Parental guidance requested for young people under 13 years"],
+  "R-17+" => ["(violence & profanity)", "for persons aged 17 and above only (No one under 17 admitted)"],
+  "R" => ["(violence & profanity)", "for persons aged 18 and above only (no one under 18 admitted)"]
+}
+
+rates.each do |key, value|
+  Rate.create!(
+    rate: key,
+    short_description: value[0],
+    description: value[1] 
+  )
+end
+
+50.times do
+  Anime.create!(
+    en_name: Faker::Lorem.sentence(3),
+    started: Faker::Time.backward(14, :all),
+    finished: [Faker::Time.forward(14, :all), nil].sample,
+    seasons: rand(1..20),
+    episodes: rand(15..30),
+    rating: rand(0.1..10.0)
+  )
+end
+
+puts "Seed finished!"
+puts "#{Genre.count} genres created!"
+puts "#{Rate.count} rates created!"
+puts "#{Anime.count} anime created!"

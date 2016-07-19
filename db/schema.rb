@@ -25,16 +25,13 @@ ActiveRecord::Schema.define(version: 20160718081518) do
     t.string   "en_name",    null: false
     t.string   "jap_name"
     t.string   "ara_name"
-    t.integer  "genre_id",   null: false
     t.date     "started",    null: false
     t.date     "finished"
-    t.integer  "sesones"
-    t.integer  "episods"
-    t.integer  "rating_id",  null: false
+    t.integer  "seasons"
+    t.integer  "episodes"
+    t.decimal   "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["genre_id"], name: "index_animes_on_genre_id"
-    t.index ["rating_id"], name: "index_animes_on_rating_id"
   end
 
   create_table "genres", force: :cascade do |t|

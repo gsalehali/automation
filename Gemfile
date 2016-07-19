@@ -44,6 +44,8 @@ group :development, :test do
   gem 'byebug', platform: :mri
   # Provids Test framework
   gem 'rspec-rails'
+  #populate data wher
+  gem 'faker'
 end
 
 group :development do

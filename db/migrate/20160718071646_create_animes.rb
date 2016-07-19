@@ -4,12 +4,11 @@ class CreateAnimes < ActiveRecord::Migration[5.0]
       t.string :en_name, null: false
       t.string :jap_name
       t.string :ara_name
-      t.references :genre, foreign_key: true, null: false
       t.date :started, null: false
       t.date :finished
-      t.integer :sesones
-      t.integer :episods
-      t.references :rating, oreign_key: true, null: false
+      t.integer :seasons
+      t.integer :episodes
+      t.decimal :rating
 
       t.timestamps
     end
